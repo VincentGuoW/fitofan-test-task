@@ -2,6 +2,9 @@ import React from 'react';
 import { Plus } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
+//Add google login Button
+import LoginButton from './LoginButton';
+
 interface HeaderProps {
   onPostJob: () => void;
 }
@@ -39,9 +42,8 @@ const Header: React.FC<HeaderProps> = ({ onPostJob }) => {
               <span>Post Job</span>
             </button>
             
-            <button className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors text-xs">
-              Sign In
-            </button>
+              <LoginButton />
+            
           </div>
         </div>
       </div>

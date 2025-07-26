@@ -13,6 +13,8 @@ import { filterJobs } from './utils/filterJobs';
 
 
 
+
+
 export interface FilterState {
   search: string;
   location: string;
