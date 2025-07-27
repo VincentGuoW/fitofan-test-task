@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Header from './components/Header';
 import SearchFilters from './components/SearchFilters';
 import JobGrid from './components/JobGrid';
@@ -8,8 +8,13 @@ import { Job } from './types/Job';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 //Refactor: Move mockJobs data and job filtering logic to separate modules
-import { mockJobs } from './data/mockJobs';
+
 import { filterJobs } from './utils/filterJobs';
+
+//Don't pull data from mockJobs anymore. Data from jobServices.ts-->supabase
+//import { mockJobs } from './data/mockJobs';
+import { fetchJobs } from './services/jobService';
+
 
 
 
@@ -23,8 +28,10 @@ export interface FilterState {
 }
 
 function App() {
-  const [jobs] = useState<Job[]>(mockJobs);
-  const [filteredJobs, setFilteredJobs] = useState<Job[]>(mockJobs);
+  //const [jobs] = useState<Job[]>(mockJobs);
+  const [jobs,setJobs] = useState<Job[]>([]);
+  //const [filteredJobs, setFilteredJobs] = useState<Job[]>(mockJobs);
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [filters, setFilters] = useState<FilterState>({
@@ -34,12 +41,23 @@ function App() {
     experience: ''
   });
 
+  useEffect(()=>{
+    const loadJobs =async()=>{
+      const jobData = await fetchJobs();
+      //Test for jobData
+      console.log("fetchJobs() called");
+      console.log("Fetched jobs:", jobData);
+      setJobs(jobData);
+      setFilteredJobs(jobData);
+    };
+    loadJobs();
+  },[])
 
 
-    const handleFilterChange = (newFilters: FilterState) => {
-      setFilters(newFilters);
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
     const filtered = filterJobs(jobs, newFilters);
-      setFilteredJobs(filtered);
+    setFilteredJobs(filtered);
   };
 
 

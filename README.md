@@ -26,8 +26,8 @@ How to Run Locally:
     npm install
 
 3.Creat .env file under project file:
-    VITE_SUPABASE_URL=https://dhklrtiksalgepspmcsr.supabase.co
 
+    VITE_SUPABASE_URL=https://dhklrtiksalgepspmcsr.supabase.co
     VITE_SUPABASE_ANON_KEY= (I will share this key separately if needed)
 
 4.npm run dev

@@ -78,5 +78,18 @@ export const mockJobs: Job[] = [
     requirements: ['Nutrition Certification', 'Experience with meal planning', 'Bachelor\'s degree preferred'],
     postedDate: '2024-01-10',
     sportType: 'Nutrition'
+  },
+  {
+    id: '7',
+    title: 'AAA',
+    company: 'AAA',
+    location: 'Seattle, WA',
+    salary: '$38,000 - $52,000',
+    type: 'Full-time',
+    experience: 'Mid-level',
+    description: 'You\'re a nutrition coach at heart, but not just any coach. You live and breathe healthy living. You see beyond the food and understand how dietary habits shape perception, experience, and emotion.',
+    requirements: ['Nutrition Certification', 'Experience with meal planning', 'Bachelor\'s degree preferred'],
+    postedDate: '2024-01-10',
+    sportType: 'Nutrition'
   }
 ];
