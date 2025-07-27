@@ -11,8 +11,7 @@ import { ThemeProvider } from './contexts/ThemeContext';
 
 import { filterJobs } from './utils/filterJobs';
 
-//Don't pull data from mockJobs anymore. Data from jobServices.ts-->supabase
-//import { mockJobs } from './data/mockJobs';
+
 import { fetchJobs } from './services/jobService';
 
 
@@ -28,9 +27,9 @@ export interface FilterState {
 }
 
 function App() {
-  //const [jobs] = useState<Job[]>(mockJobs);
+
   const [jobs,setJobs] = useState<Job[]>([]);
-  //const [filteredJobs, setFilteredJobs] = useState<Job[]>(mockJobs);
+
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
