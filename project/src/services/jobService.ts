@@ -7,12 +7,11 @@ import { filterJobs } from '../utils/filterJobs';
 import { supabase } from './supabaseClient';
 
 export const fetchJobs = async (): Promise<Job[]> => {
-  const { data, error } = await supabase
-    .from('jobs')
-    .select('*');
+  const { data, error } = await supabase.from('jobs').select('*');
 
 
   if (error || !data|| data.length === 0) {
+
     console.warn('Supabase failed or returned empty. Falling back to mockJobs:', error?.message);
     return mockJobs;
   }
