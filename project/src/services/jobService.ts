@@ -8,10 +8,7 @@ import { supabase } from './supabaseClient';
 
 export const fetchJobs = async (): Promise<Job[]> => {
   const { data, error } = await supabase.from('jobs').select('*');
-
-
   if (error || !data|| data.length === 0) {
-
     console.warn('Supabase failed or returned empty. Falling back to mockJobs:', error?.message);
     return mockJobs;
   }
@@ -29,4 +26,17 @@ export const fetchJobs = async (): Promise<Job[]> => {
 export const fetchFilteredJobs = async (filters: FilterState): Promise<Job[]> => {
   const allJobs = await fetchJobs();
   return filterJobs(allJobs, filters);
+};
+
+//Add job post method
+export const postJob = async (jobData: Omit<Job, 'id'>) => {
+  const { data, error } = await supabase.from('jobs')
+    .insert([jobData]);  //add job into supabase
+
+  if (error) {
+    console.error("Error posting job:", error.message);
+    return null;
+  }
+
+  return data;
 };

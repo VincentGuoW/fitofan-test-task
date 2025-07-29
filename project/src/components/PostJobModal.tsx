@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { X, Building2, MapPin, DollarSign, FileText, Users, Clock, Activity } from 'lucide-react';
+import { postJob } from '../services/jobService';
+import {v4 as uuid4} from 'uuid';
 
 interface PostJobModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+// Define and constrain valid job types and experience levels
+const validTypes = ['Full-time', 'Part-time', 'Contract', 'Freelance'] as const;
+type JobType = typeof validTypes[number];
+
+const validExperiences = ['Entry-level', 'Mid-level', 'Senior'] as const;
+type ExperienceLevel = typeof validExperiences[number];
+
 
 const PostJobModal: React.FC<PostJobModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -19,9 +29,25 @@ const PostJobModal: React.FC<PostJobModalProps> = ({ isOpen, onClose }) => {
     sportType: 'Fitness Training'
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async  (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
+    // Valid job types and experience levels used for type safety and input validation
+    const isValidType = validTypes.includes(formData.type as JobType);
+    const isValidExperience = validExperiences.includes(formData.experience as ExperienceLevel);
+    
+    const jobToPost = {
+      id:uuid4(),
+      ...formData,
+      type: formData.type as JobType,
+      experience: formData.experience as ExperienceLevel,
+      requirements: formData.requirements
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line !== ''),
+      postedDate: new Date().toISOString().split('T')[0] // Keep only YYYY-MM-DD
+    };
+    const result = await postJob(jobToPost); 
+
     console.log('Job posted:', formData);
     onClose();
     // Reset form
